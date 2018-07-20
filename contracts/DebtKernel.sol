@@ -256,7 +256,7 @@ contract DebtKernel is Pausable {
     {
         require(msg.sender == debtor || msg.sender == underwriter);
 
-        Issuance memory issuance = getIssuance(
+        bytes32 issuanceAgreementId = getAgreementId(
             version,
             debtor,
             underwriter,
@@ -266,9 +266,9 @@ contract DebtKernel is Pausable {
             termsContractParameters
         );
 
-        issuanceCancelled[issuance.agreementId] = true;
+        issuanceCancelled[issuanceAgreementId] = true;
 
-        LogIssuanceCancelled(issuance.agreementId, msg.sender);
+        LogIssuanceCancelled(issuanceAgreementId, msg.sender);
     }
 
     /**
