@@ -46,7 +46,7 @@ contract RepaymentRouter is Pausable {
 
     event LogRepayment(
         bytes32 indexed _agreementId,
-        address indexed _payer,
+        address _payer,
         address indexed _beneficiary,
         uint _amount,
         address _token

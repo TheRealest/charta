@@ -55,7 +55,7 @@ contract Collateralizer is Pausable, PermissionEvents {
 
     event CollateralLocked(
         bytes32 indexed agreementID,
-        address indexed token,
+        address token,
         uint amount
     );
 
