@@ -27,10 +27,10 @@ contract MockDebtRegistry is MockContract {
         address _beneficiary,
         address _debtor,
         address _underwriter,
-        uint _underwriterRiskRating,
+        uint128 _underwriterRiskRating,
         address _termsContract,
         bytes32 _termsContractParameters,
-        uint _salt
+        uint128 _salt
     )
         public
         returns (bytes32 _agreementId)

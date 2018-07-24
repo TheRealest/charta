@@ -36,13 +36,13 @@ contract DebtRegistry is Pausable, PermissionEvents {
     using PermissionsLib for PermissionsLib.Permissions;
 
     struct Entry {
+        bytes32 termsContractParameters;
+        uint128 underwriterRiskRating;
+        uint128 issuanceBlockTimestamp;
         address version;
         address beneficiary;
         address underwriter;
-        uint underwriterRiskRating;
         address termsContract;
-        bytes32 termsContractParameters;
-        uint issuanceBlockTimestamp;
     }
 
     // Primary registry mapping agreement IDs to their corresponding entries
@@ -61,7 +61,7 @@ contract DebtRegistry is Pausable, PermissionEvents {
         bytes32 indexed agreementId,
         address indexed beneficiary,
         address indexed underwriter,
-        uint underwriterRiskRating,
+        uint128 underwriterRiskRating,
         address termsContract,
         bytes32 termsContractParameters
     );
@@ -110,10 +110,10 @@ contract DebtRegistry is Pausable, PermissionEvents {
         address _beneficiary,
         address _debtor,
         address _underwriter,
-        uint _underwriterRiskRating,
+        uint128 _underwriterRiskRating,
         address _termsContract,
         bytes32 _termsContractParameters,
-        uint _salt
+        uint128 _salt
     )
         public
         onlyAuthorizedToInsert
@@ -122,13 +122,13 @@ contract DebtRegistry is Pausable, PermissionEvents {
         returns (bytes32 _agreementId)
     {
         Entry memory entry = Entry(
+            _termsContractParameters,
+            _underwriterRiskRating,
+            uint128(block.timestamp),
             _version,
             _beneficiary,
             _underwriter,
-            _underwriterRiskRating,
-            _termsContract,
-            _termsContractParameters,
-            block.timestamp
+            _termsContract
         );
 
         bytes32 agreementId = _getAgreementId(entry, _debtor, _salt);
@@ -226,7 +226,7 @@ contract DebtRegistry is Pausable, PermissionEvents {
     function get(bytes32 agreementId)
         public
         view
-        returns(address, address, address, uint, address, bytes32, uint)
+        returns(address, address, address, uint128, address, bytes32, uint128)
     {
         return (
             registry[agreementId].version,
@@ -298,7 +298,7 @@ contract DebtRegistry is Pausable, PermissionEvents {
         public
         view
         onlyExtantEntry(agreementId)
-        returns (uint timestamp)
+        returns (uint128 timestamp)
     {
         return registry[agreementId].issuanceBlockTimestamp;
     }
@@ -341,7 +341,7 @@ contract DebtRegistry is Pausable, PermissionEvents {
      * Helper function for computing the hash of a given issuance,
      * and, in turn, its agreementId
      */
-    function _getAgreementId(Entry _entry, address _debtor, uint _salt)
+    function _getAgreementId(Entry _entry, address _debtor, uint128 _salt)
         internal
         pure
         returns(bytes32)

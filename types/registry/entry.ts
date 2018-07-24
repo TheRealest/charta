@@ -67,7 +67,7 @@ export class DebtRegistryEntry {
     }
 
     private generateSalt(): BigNumber {
-        const saltBuffer = crypto.randomBytes(32);
+        const saltBuffer = crypto.randomBytes(16);
         const saltBufferHex = ethUtil.bufferToHex(saltBuffer);
         return new BigNumber(saltBufferHex);
     }

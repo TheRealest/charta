@@ -310,10 +310,10 @@ contract DebtKernel is Pausable {
             beneficiary,
             issuance.debtor,
             issuance.underwriter,
-            issuance.underwriterRiskRating,
+            uint128(issuance.underwriterRiskRating),
             issuance.termsContract,
             issuance.termsContractParameters,
-            issuance.salt
+            uint128(issuance.salt)
         );
 
         assert(tokenId == uint(issuance.agreementId));

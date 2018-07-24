@@ -79,10 +79,10 @@ contract DebtToken is ERC721Token, ERC165, Pausable, PermissionEvents {
         address _beneficiary,
         address _debtor,
         address _underwriter,
-        uint _underwriterRiskRating,
+        uint128 _underwriterRiskRating,
         address _termsContract,
         bytes32 _termsContractParameters,
-        uint _salt
+        uint128 _salt
     )
         public
         whenNotPaused
